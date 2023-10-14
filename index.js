@@ -1,9 +1,17 @@
 import express from 'express';
+import bodyParser from 'body-parser';
+import userRouter from './src/features/user/user.route.js';
 
 
 const server = express();
 
+// parse application/x-www-form-urlencoded
+server.use(bodyParser.urlencoded({ extended: false }))
 
+// parse application/json
+server.use(bodyParser.json())
+
+server.use('/api/user',userRouter);
 server.get('/',(req,res)=>{
     res.status(200).send('now from here we will create');
 })
