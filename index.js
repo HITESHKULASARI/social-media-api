@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import userRouter from './src/features/user/user.route.js';
-
+import postRouter from './src/features/posts/posts.route.js';
+import jwtAuth from './src/middlewares/jwt.middleware.js';
 
 const server = express();
 
@@ -12,6 +13,8 @@ server.use(bodyParser.urlencoded({ extended: false }))
 server.use(bodyParser.json())
 
 server.use('/api/user',userRouter);
+server.use('/api/posts',jwtAuth,postRouter);
+
 server.get('/',(req,res)=>{
     res.status(200).send('now from here we will create');
 })

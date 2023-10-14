@@ -5,15 +5,22 @@ export default class UserModel{
         this.username = username;
         this.email = email;
         this.password = password;
+        this.posts = [];
+        this.comments = [];
     }
 
     addUser(username,email,password){
         //creating the object of user
-        const obj = {
+        
+        const obj = new UserModel(
             username,
             email,
             password
-        }
+            );
+            
+            
+            
+        
         //storing the user
         userStorage.push(obj);
     }
