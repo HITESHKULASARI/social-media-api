@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import userRouter from './src/features/user/user.route.js';
 import postRouter from './src/features/posts/posts.route.js';
+import commentRouter from './src/features/comments/comments.route.js'
+import likeRouter from './src/features/likes/likes.route.js';
 import jwtAuth from './src/middlewares/jwt.middleware.js';
 
 const server = express();
@@ -10,10 +12,12 @@ const server = express();
 server.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
-server.use(bodyParser.json())
+server.use(bodyParser.json());
 
 server.use('/api/user',userRouter);
 server.use('/api/posts',jwtAuth,postRouter);
+server.use('/api/comments',jwtAuth,commentRouter);
+server.use('/api/likes',jwtAuth,likeRouter);
 
 server.get('/',(req,res)=>{
     res.status(200).send('now from here we will create');

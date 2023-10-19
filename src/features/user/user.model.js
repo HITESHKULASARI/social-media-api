@@ -34,6 +34,10 @@ export default class UserModel{
 
         return userStorage[valid];
     }
+
+    getAllUsers(){
+        return userStorage;
+    }
 }
 
 let userStorage = [];

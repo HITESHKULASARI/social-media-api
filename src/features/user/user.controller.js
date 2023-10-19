@@ -18,6 +18,12 @@ export default class UserControler{
 
 
     }
+    static getAllUsers(req,res){
+
+        const result =  userModel.getAllUsers();
+        console.log(result);
+        res.status(200).send(result);
+    }
 
     static checkUser(req,res){
 

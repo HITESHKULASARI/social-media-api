@@ -16,6 +16,7 @@ const jwtAuth = ( req , res , next )=>{
         'AIb6d35fvJM4O9pXqXQNla2jBCH9kuLz'
         );
         console.log(payload);
+        console.log(req.body);
         req.username = payload.username;
         } catch (err) {
         // 4. return error.
