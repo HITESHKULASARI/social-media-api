@@ -1,4 +1,5 @@
 
+import { ApplicationError } from '../../error-handler/applicationError.js';
 import Post from '../posts/posts.model.js';
 
 const  posts = new Post();
@@ -15,19 +16,25 @@ export default class LikesModel{
     static addLikes(post,name){
         //for finding that post is present or not in my postmodel
         const findPost = posts.getAllPosts().find((p) => p.post == post);
-        //if it's not present i am returning it from here
-        if(!findPost)return -2;
+
+
+        //if it's not present i am returning it from heres
+        if(!findPost)throw new ApplicationError("User not found",404);
+
+
         console.log('username',name);
         //if it's present i am checking that does user already liked this post
         let likeInfo = likesStorage.find((p) => p.post == post && p.username == name);
+
         //if user already liked it i am returning from here
         if(likeInfo){
-            return -1;
+            throw new ApplicationError('User have already liked the post',400);
         }
+        
         //does post is present or not for storing in our likesStorage
         likeInfo = likesStorage.find((p) => p.post == post );
-        //increasing the like for post api
         
+        //increasing the like for post api
         if(!likeInfo){
             //if it's not present so i am creating that user
            //then i have to make that post
@@ -59,7 +66,7 @@ export default class LikesModel{
         const findPost = postByUsers.find((p) => p.post == post);
         // if i haven't found the post i am returning from here
         if(!findPost){
-            return -1;
+            throw new ApplicationError('This post not found',404);
         }
 
         
@@ -67,7 +74,7 @@ export default class LikesModel{
         const getLikesAssociatedToPost = likesStorage.find((p) => p.post == post);
         //if i haven't received and like yet on that post i am returning from here
         if(!getLikesAssociatedToPost){
-            return -2;
+            throw new ApplicationError(`don't have any like`,400);
         }
         // else returning it from here
         return getLikesAssociatedToPost;

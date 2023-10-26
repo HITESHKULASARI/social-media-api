@@ -5,6 +5,7 @@ import postRouter from './src/features/posts/posts.route.js';
 import commentRouter from './src/features/comments/comments.route.js'
 import likeRouter from './src/features/likes/likes.route.js';
 import jwtAuth from './src/middlewares/jwt.middleware.js';
+import { ApplicationError } from './src/error-handler/applicationError.js';
 
 const server = express();
 
@@ -21,6 +22,14 @@ server.use('/api/likes',jwtAuth,likeRouter);
 
 server.get('/',(req,res)=>{
     res.status(200).send('now from here we will create');
+})
+
+server.use((err,req,res,next) => {
+    console.log(err);
+    if(err instanceof ApplicationError){
+        res.status(err.code).send(err.message);
+    }
+    res.status(500).send("something went wrong please try again later");
 })
 
 server.listen(8000,(err)=>{
